@@ -20,15 +20,15 @@ export const decrementAmount = (amount: number): IDecrementAction => ({
   type: ActionNames.DEC,
 })
 
-export interface ICounterState {
+export interface ITimerState {
   num: number
 }
 
-export type CounterActions = IncrementAction | IDecrementAction
+export type TimerActions = IncrementAction | IDecrementAction
 
-const initialState: ICounterState = {num: 0};
+const initialState: ITimerState = {num: 0};
 
-export default function reducer(state: ICounterState = initialState, action: CounterActions): ICounterState {
+export default function reducer(state: ITimerState = initialState, action: TimerActions): ITimerState {
   switch (action.type) {
     case ActionNames.INC:
       return {num: state.num + 1}
