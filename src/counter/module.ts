@@ -1,38 +1,23 @@
-import {Action} from 'redux'
+import actionCreatorFactory from 'typescript-fsa';
 
-enum ActionNames {
-  INC = 'counter/increment',
-  DEC = 'counter/decrement',
-}
+const actionCreator = actionCreatorFactory('counter')
 
-interface IncrementAction extends Action {
-  type: ActionNames.INC
-}
-export const incrementAmount = (amount: number): IncrementAction => ({
-  type: ActionNames.INC,
-})
-
-interface IDecrementAction extends Action {
-  type: ActionNames.DEC
-}
-
-export const decrementAmount = (amount: number): IDecrementAction => ({
-  type: ActionNames.DEC,
-})
+export const incrementAmount = actionCreator('increment')
+export const decrementAmount = actionCreator('decrement')
 
 export interface ICounterState {
   num: number
 }
 
-export type CounterActions = IncrementAction | IDecrementAction
+export type CounterActions = ReturnType<typeof incrementAmount> | ReturnType<typeof decrementAmount>
 
 const initialState: ICounterState = {num: 0};
 
 export default function reducer(state: ICounterState = initialState, action: CounterActions): ICounterState {
   switch (action.type) {
-    case ActionNames.INC:
+    case incrementAmount.type:
       return {num: state.num + 1}
-    case ActionNames.DEC:
+    case decrementAmount.type:
       return {num: state.num - 1}
     default:
       return state
